@@ -1,6 +1,7 @@
 "use strict";
 let moveName = "yes";
-const movies = [
+// типизировать функцию через интерфейс
+let movies = [
     {
         'name': 'Interstellar',
         'ratings': {
@@ -16,9 +17,24 @@ const movies = [
         }
     }
 ];
-const addObject = () => {
+// типизировать функцию через интерфейс
+const addObject = (moveName) => {
+    const object = {};
+    object["name"] = moveName;
+    object["ratings"] = {};
+    movies.push(object);
 };
-const deleteObject = () => {
+const deleteObject = (moveName) => {
+    const newAreey = [];
+    for (let i = 0; i < movies.length; i++) {
+        if (movies[i]["name"] = moveName) {
+            break;
+        }
+        else {
+            newAreey.push(i);
+        }
+    }
+    return newAreey;
 };
 const listObject = () => {
 };
@@ -48,5 +64,10 @@ const userReuuest = () => {
 };
 while (moveName) {
     moveName = userReuuest();
+    if (moveName === "add") {
+        moveName = userReuuest();
+        addObject(moveName);
+    }
+    movies = deleteObject(moveName);
     console.log(findObject(moveName));
 }

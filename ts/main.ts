@@ -1,7 +1,7 @@
 
-let moveName:  string = "yes"
-
-const movies = [
+let moveName: string = "yes"
+// типизировать функцию через интерфейс
+let movies:any = [
     {
         'name': 'Interstellar',
         'ratings': {
@@ -17,11 +17,22 @@ const movies = [
         }
     }
 ]
-const addObject = () => {
-
+// типизировать функцию через интерфейс
+const addObject = (moveName:string) => {
+    const object:any = {}
+    object["name"] = moveName
+    object["ratings"] = {}
+    movies.push(object)
 }
-const deleteObject = () => {
-
+const deleteObject = (moveName: string) => {
+    const newAreey = []
+    for (let i = 0; i < movies.length; i++) {
+        if(movies[i]["name"] = moveName){
+            break
+        }else {
+            newAreey.push(i)
+        }
+    }return newAreey
 }
 const listObject = () => {
 
@@ -55,5 +66,11 @@ const userReuuest = (): string => {
 
 while (moveName){
     moveName = userReuuest();
-     console.log(findObject(moveName));
+    
+    if(moveName === "add"){
+        moveName = userReuuest();
+        addObject(moveName)
+    }
+    movies = deleteObject(moveName)
+    console.log(findObject(moveName));
 }
