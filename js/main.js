@@ -38,19 +38,37 @@ const deleteObject = (moveName) => {
 };
 const listObject = () => {
 };
-const rateObject = () => {
-};
-const findObject = (moveName) => {
-    for (let i = 0; i < movies.length; i++) {
-        if (movies[i]['name'] === moveName) {
-            return `Найден фильм ${movies[i]["name"]}`;
+const rateObject = (moveName) => {
+    if (findObject(moveName)) {
+        let name = prompt("Введите имя");
+        let rating = prompt("Введите оценку");
+        if (rating !== null &&
+            typeof (parseInt(rating)) === "number" &&
+            name !== null &&
+            !isNaN(parseInt(rating))) {
+            let ratingNumber = parseInt(rating);
+            // movies[findObject(moveName, true)]["ratings"] = name
+            movies[findObject(moveName, true)]["ratings"][name] = ratingNumber;
+            return;
         }
     }
-    return "такого фильма нет в списке";
+    return "нет такого фильма";
 };
-const userReuuest = () => {
+const findObject = (moveName, isIndex = false) => {
+    for (let i = 0; i < movies.length; i++) {
+        if (movies[i]['name'] === moveName) {
+            if (isIndex === false) {
+                return movies[i]["name"];
+            }
+            return i;
+        }
+    }
+    return 0;
+};
+const userReuuest = (STRPROMT) => {
     while (true) {
-        const moveName = prompt("Введите название фильма");
+        STRPROMT = STRPROMT || "Введите название фильма \nсписок команд\n_add\n_del\n_rate\n_find";
+        const moveName = prompt(STRPROMT);
         if (moveName === null) {
             alert("Вы завершили цикл");
             return "";
@@ -63,11 +81,22 @@ const userReuuest = () => {
     }
 };
 while (moveName) {
-    moveName = userReuuest();
-    if (moveName === "add") {
-        moveName = userReuuest();
+    console.log(movies);
+    moveName = userReuuest("");
+    if (moveName === "_add") {
+        moveName = userReuuest("Введите название фильма который хотите добавить");
         addObject(moveName);
+        continue;
     }
-    movies = deleteObject(moveName);
-    console.log(findObject(moveName));
+    else if (moveName === "_del") {
+        moveName = userReuuest("Введите название фильма который хотите удалить");
+        movies = deleteObject(moveName);
+        continue;
+    }
+    else if (moveName === "_rate") {
+        moveName = userReuuest("Введите название фильма в который вы хотите добавить имя и рейтинг");
+        rateObject(moveName);
+        continue;
+    }
+    console.log(`Найден фильм ${findObject(moveName)}`);
 }
