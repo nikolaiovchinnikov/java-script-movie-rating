@@ -27,11 +27,8 @@ const addObject = (moveName) => {
 const deleteObject = (moveName) => {
     const newAreey = [];
     for (let i = 0; i < movies.length; i++) {
-        if (movies[i]["name"] = moveName) {
-            break;
-        }
-        else {
-            newAreey.push(i);
+        if (movies[i]["name"] !== moveName) {
+            newAreey.push(movies[i]);
         }
     }
     return newAreey;
@@ -60,14 +57,16 @@ const findObject = (moveName, isIndex = false) => {
             if (isIndex === false) {
                 return movies[i]["name"];
             }
-            return i;
+            else if (isIndex === true) {
+                return i;
+            }
         }
     }
     return 0;
 };
 const userReuuest = (STRPROMT) => {
     while (true) {
-        STRPROMT = STRPROMT || "Введите название фильма \nсписок команд\n_add\n_del\n_rate\n_find";
+        STRPROMT = STRPROMT || "Введите название фильма \nсписок команд\n_add\n_del\n_rate";
         const moveName = prompt(STRPROMT);
         if (moveName === null) {
             alert("Вы завершили цикл");
