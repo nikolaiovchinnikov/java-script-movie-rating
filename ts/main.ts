@@ -1,6 +1,8 @@
+type str = string
+type num = number
+type bool = boolean
 
-let moveName: string = "yes";
-
+let moveName: str = "yes";
 // типизировать функцию через интерфейс
 let movies:any = [
     {
@@ -18,14 +20,15 @@ let movies:any = [
         }
     }
 ]
-// типизировать функцию через интерфейс
-const addObject = (moveName:string) => {
+
+const addObject = (moveName:str) => {
     const object:any = {}
     object["name"] = moveName
     object["ratings"] = {}
     movies.push(object)
 }
-const deleteObject = (moveName: string) => {
+
+const deleteObject = (moveName: str) => {
     const newAreey = []
     for (let i = 0; i < movies.length; i++) {
         if(movies[i]["name"] !== moveName){
@@ -33,29 +36,31 @@ const deleteObject = (moveName: string) => {
         }
     }return newAreey
 }
-const listObject = () => {
 
+const listObject = () => {
+    for (let key of movies) {
+        console.log(key["name"])
+    }
 }
-const rateObject = (moveName: string) => {
+
+const rateObject = (moveName: str) => {
     if(findObject(moveName,)){
-        let name: string | null = prompt("Введите имя");
-        let rating: string | null = prompt("Введите оценку");
+        let name: str | null = prompt("Введите имя");
+        let rating: str | null = prompt("Введите оценку");
         if(
             rating !== null &&
             typeof(parseInt(rating)) === "number" &&
             name !== null && 
             !isNaN(parseInt(rating))
             ){
-            let ratingNumber:number = parseInt(rating)
-            // movies[findObject(moveName, true)]["ratings"] = name
+            let ratingNumber:num = parseInt(rating)
             movies[findObject(moveName, true)]["ratings"][name] = ratingNumber
             return
         }
     }return "нет такого фильма"
-        
-
 }
-const findObject = (moveName: string, isIndex:boolean = false): string | number => {
+
+const findObject = (moveName: str, isIndex:bool = false): str | num => {
     for (let i = 0; i < movies.length; i++) {
         if(movies[i]['name'] === moveName){
             if(isIndex === false){
@@ -67,9 +72,10 @@ const findObject = (moveName: string, isIndex:boolean = false): string | number 
         }
     }return 0
 }
-const userReuuest = (STRPROMT:string): string => {
+
+const userReuuest = (STRPROMT:str): str => {
     while(true){
-        STRPROMT = STRPROMT || "Введите название фильма \nсписок команд\n_add\n_del\n_rate";
+        STRPROMT = STRPROMT || "Введите название фильма \nсписок команд\n_add\n_del\n_rate\n_list";
         const moveName = prompt(STRPROMT);
         if (moveName === null){
             alert("Вы завершили цикл");
@@ -82,12 +88,8 @@ const userReuuest = (STRPROMT:string): string => {
 }
 
 
-
-
 while (moveName){
-    console.log(movies);
     moveName = userReuuest("");
-    
     if(moveName === "_add"){
         moveName = userReuuest("Введите название фильма который хотите добавить");
         addObject(moveName)
@@ -103,6 +105,9 @@ while (moveName){
         rateObject (moveName);
         continue
     }
-
+    else if(moveName === "_list"){
+        listObject ();
+        continue
+    }
     console.log(`Найден фильм ${findObject(moveName)}`);
 }

@@ -17,7 +17,6 @@ let movies = [
         }
     }
 ];
-// типизировать функцию через интерфейс
 const addObject = (moveName) => {
     const object = {};
     object["name"] = moveName;
@@ -34,6 +33,9 @@ const deleteObject = (moveName) => {
     return newAreey;
 };
 const listObject = () => {
+    for (let key of movies) {
+        console.log(key["name"]);
+    }
 };
 const rateObject = (moveName) => {
     if (findObject(moveName)) {
@@ -44,7 +46,6 @@ const rateObject = (moveName) => {
             name !== null &&
             !isNaN(parseInt(rating))) {
             let ratingNumber = parseInt(rating);
-            // movies[findObject(moveName, true)]["ratings"] = name
             movies[findObject(moveName, true)]["ratings"][name] = ratingNumber;
             return;
         }
@@ -66,7 +67,7 @@ const findObject = (moveName, isIndex = false) => {
 };
 const userReuuest = (STRPROMT) => {
     while (true) {
-        STRPROMT = STRPROMT || "Введите название фильма \nсписок команд\n_add\n_del\n_rate";
+        STRPROMT = STRPROMT || "Введите название фильма \nсписок команд\n_add\n_del\n_rate\n_list";
         const moveName = prompt(STRPROMT);
         if (moveName === null) {
             alert("Вы завершили цикл");
@@ -80,7 +81,6 @@ const userReuuest = (STRPROMT) => {
     }
 };
 while (moveName) {
-    console.log(movies);
     moveName = userReuuest("");
     if (moveName === "_add") {
         moveName = userReuuest("Введите название фильма который хотите добавить");
@@ -95,6 +95,10 @@ while (moveName) {
     else if (moveName === "_rate") {
         moveName = userReuuest("Введите название фильма в который вы хотите добавить имя и рейтинг");
         rateObject(moveName);
+        continue;
+    }
+    else if (moveName === "_list") {
+        listObject();
         continue;
     }
     console.log(`Найден фильм ${findObject(moveName)}`);
